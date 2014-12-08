@@ -1,5 +1,14 @@
+<p></p>
+<form action= "/" method="post">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name= "name" placeholder="Astronut Ball"/>
+  <label for="description">Description:</label>
+  <input type="text" id="description" name= "description" placeholder="Dress up that space suit"/>
+  <label for="location">Location:</label>
+  <input type="text" id="location" name="location" placeholder= "Nebula 5" />
+  <input type = "submit"/>
+</form>
+
 <% @meetups.each do |meetup| %>
 <h1><a href="/meetups/<%=meetup.id%>"><%= meetup.name %></h1>
-<h4><%= meetup.description %></h4>
-<h4><%= meetup.location %></h4>
-<% end %>
+  <% end %>

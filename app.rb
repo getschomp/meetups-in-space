@@ -31,7 +31,7 @@ end
 
 get '/' do
 #  Meetup.create(name: 'a new meetup', description: "meet in person", location:"Launch Academy", attendees: "a user", comments: "it was fun")
-  @meetups = Meetup.all
+  @meetups = Meetup.all.order("name")
   erb :index
 end
 
@@ -60,4 +60,12 @@ end
 
 get '/example_protected_page' do
   authenticate!
+end
+
+post '/' do
+  @name = params['name']
+  @location = params['location']
+  @description = params['description']
+  Meetup.create(name: @name, description: @description, location: @location, attendees: "none", comments: "none" )
+  redirect '/'
 end
