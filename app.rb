@@ -35,9 +35,10 @@ get '/' do
   erb :index
 end
 
-get 'meetups/:id' do
-  @id=params[id]
-  show.erb
+get '/meetups/:id' do
+  @id=params[:id]
+  @meetup = Meetup.find(@id)
+  erb :show
 end
 
 get '/auth/github/callback' do
