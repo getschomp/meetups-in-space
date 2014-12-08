@@ -63,9 +63,9 @@ get '/example_protected_page' do
 end
 
 post '/' do
-  @name = params['name']
-  @location = params['location']
-  @description = params['description']
+  @name = params['name'].capitalize
+  @location = params['location'].capitalize
+  @description = params['description'].capitalize
   Meetup.create(name: @name, description: @description, location: @location, attendees: "none", comments: "none" )
   redirect '/'
 end
