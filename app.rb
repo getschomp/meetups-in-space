@@ -30,7 +30,14 @@ def authenticate!
 end
 
 get '/' do
+#  Meetup.create(name: 'a new meetup', description: "meet in person", location:"Launch Academy", attendees: "a user", comments: "it was fun")
+  @meetups = Meetup.all
   erb :index
+end
+
+get 'meetups/:id' do
+  @id=params[id]
+  show.erb
 end
 
 get '/auth/github/callback' do
