@@ -1,4 +1,5 @@
 class Meetup < ActiveRecord::Base
-  # has_many :attendees, dependent: :destroy
-  # has_many :users, :through => :atendees
+  has_many :attendees
+  has_many :users, :through => :attendees
+
 end

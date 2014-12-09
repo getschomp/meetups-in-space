@@ -37,6 +37,9 @@ end
 get '/meetups/:id' do
   @id=params[:id]
   @meetup = Meetup.find(@id)
+  @all_attendees = Attendee.all
+  @meetup_attendees = @meetup.users
+  binding.pry
   erb :show
 end
 
@@ -67,10 +70,14 @@ post '/' do
   @location = params['location'].capitalize
   @description = params['description'].capitalize
   Meetup.create(name: @name, description: @description, location: @location)
+  flash[:notice] = "Creating the meetup was a sucess."
   redirect '/'
 end
 
 post '/meetups/:id' do
+  authenticate!
   @id=params[:id]
+  @user = current_user
+  Attendee.create!(user_id: @user.id, meetup_id: @id)
   redirect "/meetups/#{@id}"
 end
