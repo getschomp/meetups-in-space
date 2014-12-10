@@ -39,7 +39,7 @@ get '/meetups/:id' do
   @meetup = Meetup.find(@id)
   @all_attendees = Attendee.all
   @meetup_attendees = @meetup.users
-
+  @comments = Comment.where(:meetup_id => @id)
   erb :show
 end
 
@@ -76,7 +76,7 @@ end
 
 post '/meetups/:id' do
   authenticate!
-  @id=params[:id]
+  @id = params[:id]
   @user = current_user
   begin
   Attendee.create!(user_id: @user.id, meetup_id: @id)
@@ -100,9 +100,13 @@ post '/leave/:id' do
 end
 
 post '/comments/:id' do
+  authenticate!
   @comment = params[:comment]
-  @id=params[:id]
-  redirect "/meetups/#{@id}"
+  @meetup_id = params[:id]
+  @user = current_user
+  @user_id = @user.id
+  Comment.create(:user_id => @user_id, :meetup_id => @meetup_id, :comment => @comment)
+  redirect "/meetups/#{@meetup_id}"
 end
 
 

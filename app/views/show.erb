@@ -41,3 +41,9 @@
     </div>
   <input type = "submit"/>
 </form>
+
+
+<% @comments.each do |comment| %>
+  <p><%= comment.comment %></p>
+  <p><%= comment.user_id %></p>
+<% end %>
