@@ -12,8 +12,32 @@
     </li>
   <ul>
 
-<div>
+<div class=buttons>
   <form action="/meetups/<%=@meetup.id%>" method="post">
-    <input type="submit" value="join" >
+    <input type="submit" value="Join" >
+  </form>
+  <form action="/leave/<%=@meetup.id%>" method="post">
+    <input type="submit" value="Leave" >
   </form>
 </div>
+
+<h2>"who's going?"</h2>
+<% @meetup_attendees.each do |attendee| %>
+<div>
+  <img src="<%= attendee.avatar_url %>" alt="users_avatar" height="100" width="100">
+</div>
+<div>
+  <%= attendee.username %>
+</div>
+<%end%>
+
+<h1>comments</h1>
+
+<div class="container">
+  <form action= "/comments/<%=@meetup.id%>" method="post">
+    <div>
+      <p>submit a comment</p>
+      <textarea name="comment" id="comment" placeholder="only the best space comments!" rows="10" cols="50"></textarea>
+    </div>
+  <input type = "submit"/>
+</form>

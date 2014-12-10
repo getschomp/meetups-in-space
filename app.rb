@@ -39,7 +39,7 @@ get '/meetups/:id' do
   @meetup = Meetup.find(@id)
   @all_attendees = Attendee.all
   @meetup_attendees = @meetup.users
-  binding.pry
+
   erb :show
 end
 
@@ -78,6 +78,38 @@ post '/meetups/:id' do
   authenticate!
   @id=params[:id]
   @user = current_user
+  begin
   Attendee.create!(user_id: @user.id, meetup_id: @id)
+  flash[:notice] = "You just joined the meetup!"
+  rescue
+  flash[:notice] = "You already joined the meetup!"
+  end
   redirect "/meetups/#{@id}"
 end
+
+post '/leave/:id' do
+  @id=params[:id]
+  @user = current_user
+  if Attendee.exists?(:user_id => @user.id, :meetup_id => @id)
+    Attendee.destroy_all(:user_id => @user.id, :meetup_id => @id)
+    flash[:notice] = "You just left the meetup!"
+  else
+    flash[:notice] = "Your not in the meetup!"
+  end
+  redirect "/meetups/#{@id}"
+end
+
+post '/comments/:id' do
+  @comment = params[:comment]
+  @id=params[:id]
+  redirect "/meetups/#{@id}"
+end
+
+
+#notes
+#class Movie < AR::Base
+# belongs_to :genre
+#end
+
+# .where - returns 0 or more records in an array
+# .find_by(...) - returns 0 or 1 record (or nil)
